@@ -8,6 +8,16 @@
 composer require banki.ru/rick-and-morty-client
 ```
 
+## How to use as a service container:
+
+Edit file services.yaml in you symfony project:
+<h5 a><strong><code>./config/services.yaml</code></strong></h5>
+```yaml
+    RickAndMortyAPI\:
+        resource: '../vendor/banki.ru/rick-and-morty-client/src/'
+```
+
+
 ## Composer Requirements:
 
 - symfony/http-client: 5.4.*

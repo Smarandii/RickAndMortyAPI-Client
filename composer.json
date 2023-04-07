@@ -1,10 +1,19 @@
 {
-    "require": {
-        "symfony/http-client": "v5.4.0"
-    },
-    "config": {
-        "platform": {
-            "php": "7.4"
+    "name": "banki.ru/rick-and-morty-client",
+    "description": "https://rickandmortyapi.com/documentation/",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "BankiRu\\RickAndMortyClient\\": "src/"
         }
-    }
+    },
+    "authors": [
+        {
+            "name": "Smarandi Oleg",
+            "email": "o.smarandi@banki.ru"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
 }

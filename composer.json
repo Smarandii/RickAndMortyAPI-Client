@@ -1,0 +1,10 @@
+{
+    "require": {
+        "symfony/http-client": "v5.4.0"
+    },
+    "config": {
+        "platform": {
+            "php": "7.4"
+        }
+    }
+}

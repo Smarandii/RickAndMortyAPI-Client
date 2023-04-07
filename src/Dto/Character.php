@@ -3,7 +3,7 @@
 namespace RickAndMortyAPI\Dto;
 use RickAndMortyAPI\Dto\Location;
 
-class Character
+class Character implements \JsonSerializable
 {
     private int $id;
 
@@ -224,6 +224,11 @@ class Character
     public function setCreated(string $created): void
     {
         $this->created = $created;
+    }
+
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
     }
 
 }

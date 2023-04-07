@@ -1,6 +1,7 @@
 <?php
 
 namespace RickAndMortyAPI\Dto;
+use RickAndMortyAPI\Dto\Location;
 
 class Character
 {
@@ -130,33 +131,33 @@ class Character
     }
 
     /**
-     * @return \App\src\Dto\Location
+     * @return \RickAndMortyAPI\Dto\Location
      */
-    public function getOrigin(): \App\src\Dto\Location
+    public function getOrigin(): Location
     {
         return $this->origin;
     }
 
     /**
-     * @param \App\src\Dto\Location $origin
+     * @param \RickAndMortyAPI\Dto\Location $origin
      */
-    public function setOrigin(\App\src\Dto\Location $origin): void
+    public function setOrigin(Location $origin): void
     {
         $this->origin = $origin;
     }
 
     /**
-     * @return \App\src\Dto\Location
+     * @return \RickAndMortyAPI\Dto\Location
      */
-    public function getLocation(): \App\src\Dto\Location
+    public function getLocation(): Location
     {
         return $this->location;
     }
 
     /**
-     * @param \App\src\Dto\Location $location
+     * @param \RickAndMortyAPI\Dto\Location $location
      */
-    public function setLocation(\App\src\Dto\Location $location): void
+    public function setLocation(Location $location): void
     {
         $this->location = $location;
     }

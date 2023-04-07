@@ -2,9 +2,15 @@
 
 [API documentation](https://rickandmortyapi.com/documentation/)
 
+## How to install:
+
+```cmd
+composer require banki.ru/rick-and-morty-client
+```
+
 ## Composer Requirements:
 
-- symfony/http-client
+- symfony/http-client: 5.4.*
 
 
 ## Use Cases:

@@ -16,7 +16,7 @@ composer require banki.ru/rick-and-morty-client
 ## Use Cases:
 
 ```php
-use RickAndMortyAPI\Api;
+use RickAndMortyAPI\Service\Api;
 
 $api_client = new Api();
 

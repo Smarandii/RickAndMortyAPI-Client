@@ -1,6 +1,6 @@
 <?php
 
-namespace RickAndMortyAPI;
+namespace RickAndMortyAPI\Service;
 
 use RickAndMortyAPI\Dto\Character;
 use RickAndMortyAPI\Dto\Location;
@@ -10,7 +10,6 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class Api
 {
-    const HTTP_OK = 200;
     private HttpClientInterface $client;
 
     public function __construct()

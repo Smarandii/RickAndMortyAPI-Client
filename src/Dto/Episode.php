@@ -2,7 +2,7 @@
 
 namespace RickAndMortyAPI\Dto;
 
-class Episode
+class Episode implements \JsonSerializable
 {
     private int $id;
 
@@ -128,6 +128,11 @@ class Episode
     public function setCreated(string $created): void
     {
         $this->created = $created;
+    }
+
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
     }
 
 }

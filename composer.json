@@ -1,19 +1,22 @@
 {
     "name": "banki.ru/rick-and-morty-client",
-    "description": "https://rickandmortyapi.com/documentation/",
+    "description": "An php 7.4 api client for https://rickandmortyapi.com/",
     "type": "library",
+    "keywords": ["api", "library", "rick_and_morty"],
     "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "BankiRu\\RickAndMortyClient\\": "src/"
-        }
-    },
     "authors": [
         {
             "name": "Smarandi Oleg",
-            "email": "o.smarandi@banki.ru"
+            "email": "olegsmarandi@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
-    "require": {}
+    "require": {
+        "php": "7.4",
+        "symfony/http-client": "5.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "RickAndMortyAPI\\": "src/"
+        }
+    }
 }

@@ -1,33 +1,33 @@
 <?php
-
+declare(strict_types=1);
 namespace RickAndMortyAPI\Dto;
 use RickAndMortyAPI\Dto\Location;
 
 class Character implements \JsonSerializable
 {
-    private int $id;
+    private ?int $id;
 
-    private string $name;
+    private ?string $name;
 
-    private string $status;
+    private ?string $status;
 
-    private string $species;
+    private ?string $species;
 
-    private string $type;
+    private ?string $type;
 
-    private bool $gender;
+    private ?string $gender;
 
-    private Location $origin;
+    private ?Location $origin;
 
-    private Location $location;
+    private ?Location $location;
 
-    private string $image;
+    private ?string $image;
 
-    private array $episode;
+    private ?array $episode;
 
-    private string $url;
+    private ?string $url;
     
-    private string $created;
+    private ?string $created;
 
     public function __construct($id)
     {
@@ -43,11 +43,13 @@ class Character implements \JsonSerializable
     }
 
     /**
-     * @param int $id
+     * @param int|null $id
+     * @return Character|null
      */
-    public function setId(int $id): void
+    public function setId(?int $id): ?Character
     {
         $this->id = $id;
+        return $this;
     }
 
     /**
@@ -59,11 +61,13 @@ class Character implements \JsonSerializable
     }
 
     /**
-     * @param string $name
+     * @param string|null $name
+     * @return Character|null
      */
-    public function setName(string $name): void
+    public function setName(?string $name): ?Character
     {
         $this->name = $name;
+        return $this;
     }
 
     /**
@@ -75,11 +79,13 @@ class Character implements \JsonSerializable
     }
 
     /**
-     * @param string $status
+     * @param string|null $status
+     * @return Character|null
      */
-    public function setStatus(string $status): void
+    public function setStatus(?string $status): ?Character
     {
         $this->status = $status;
+        return $this;
     }
 
     /**
@@ -91,11 +97,13 @@ class Character implements \JsonSerializable
     }
 
     /**
-     * @param string $species
+     * @param string|null $species
+     * @return Character|null
      */
-    public function setSpecies(string $species): void
+    public function setSpecies(?string $species): ?Character
     {
         $this->species = $species;
+        return $this;
     }
 
     /**
@@ -107,17 +115,19 @@ class Character implements \JsonSerializable
     }
 
     /**
-     * @param string $type
+     * @param string|null $type
+     * @return Character|null
      */
-    public function setType(string $type): void
+    public function setType(?string $type): ?Character
     {
         $this->type = $type;
+        return $this;
     }
 
     /**
      * @return bool
      */
-    public function getGender(): bool
+    public function getGender(): string
     {
         return $this->gender;
     }
@@ -125,9 +135,10 @@ class Character implements \JsonSerializable
     /**
      * @param bool $gender
      */
-    public function setGender(bool $gender): void
+    public function setGender(?string $gender): ?Character
     {
         $this->gender = $gender;
+        return $this;
     }
 
     /**
@@ -139,11 +150,13 @@ class Character implements \JsonSerializable
     }
 
     /**
-     * @param \RickAndMortyAPI\Dto\Location $origin
+     * @param Location|null $origin
+     * @return Character|null
      */
-    public function setOrigin(Location $origin): void
+    public function setOrigin(?Location $origin): ?Character
     {
         $this->origin = $origin;
+        return $this;
     }
 
     /**
@@ -155,11 +168,13 @@ class Character implements \JsonSerializable
     }
 
     /**
-     * @param \RickAndMortyAPI\Dto\Location $location
+     * @param Location|null $location
+     * @return Character|null
      */
-    public function setLocation(Location $location): void
+    public function setLocation(?Location $location): ?Character
     {
         $this->location = $location;
+        return $this;
     }
 
     /**
@@ -171,11 +186,13 @@ class Character implements \JsonSerializable
     }
 
     /**
-     * @param string $image
+     * @param string|null $image
+     * @return Character|null
      */
-    public function setImage(string $image): void
+    public function setImage(?string $image): ?Character
     {
         $this->image = $image;
+        return $this;
     }
 
     /**
@@ -187,11 +204,13 @@ class Character implements \JsonSerializable
     }
 
     /**
-     * @param array $episode
+     * @param array|null $episode
+     * @return Character|null
      */
-    public function setEpisode(array $episode): void
+    public function setEpisode(?array $episode): ?Character
     {
         $this->episode = $episode;
+        return $this;
     }
 
     /**
@@ -203,11 +222,13 @@ class Character implements \JsonSerializable
     }
 
     /**
-     * @param string $url
+     * @param string|null $url
+     * @return Character|null
      */
-    public function setUrl(string $url): void
+    public function setUrl(?string $url): ?Character
     {
         $this->url = $url;
+        return $this;
     }
 
     /**
@@ -221,9 +242,10 @@ class Character implements \JsonSerializable
     /**
      * @param string $created
      */
-    public function setCreated(string $created): void
+    public function setCreated(?string $created): ?Character
     {
         $this->created = $created;
+        return $this;
     }
 
     public function jsonSerialize()

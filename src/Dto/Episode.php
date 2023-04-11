@@ -1,22 +1,24 @@
 <?php
-
+declare(strict_types=1);
 namespace RickAndMortyAPI\Dto;
 
-class Episode implements \JsonSerializable
+use JsonSerializable;
+
+class Episode implements JsonSerializable
 {
-    private int $id;
+    private ?int $id;
 
-    private string $name;
+    private ?string $name;
 
-    private string $air_date;
+    private ?string $air_date;
 
-    private string $episode;
+    private ?string $episode;
 
-    private array $characters;
+    private ?array $characters;
 
-    private string $url;
+    private ?string $url;
 
-    private string $created;
+    private ?string $created;
 
     /**
      * @return int
@@ -27,11 +29,13 @@ class Episode implements \JsonSerializable
     }
 
     /**
-     * @param int $id
+     * @param int|null $id
+     * @return Episode|null
      */
-    public function setId(int $id): void
+    public function setId(?int $id): ?Episode
     {
         $this->id = $id;
+        return $this;
     }
 
     /**
@@ -43,11 +47,13 @@ class Episode implements \JsonSerializable
     }
 
     /**
-     * @param string $name
+     * @param string|null $name
+     * @return Episode|null
      */
-    public function setName(string $name): void
+    public function setName(?string $name): ?Episode
     {
         $this->name = $name;
+        return $this;
     }
 
     /**
@@ -59,11 +65,13 @@ class Episode implements \JsonSerializable
     }
 
     /**
-     * @param string $air_date
+     * @param string|null $air_date
+     * @return Episode|null
      */
-    public function setAirDate(string $air_date): void
+    public function setAirDate(?string $air_date): ?Episode
     {
         $this->air_date = $air_date;
+        return $this;
     }
 
     /**
@@ -75,11 +83,13 @@ class Episode implements \JsonSerializable
     }
 
     /**
-     * @param string $episode
+     * @param string|null $episode
+     * @return Episode|null
      */
-    public function setEpisode(string $episode): void
+    public function setEpisode(?string $episode): ?Episode
     {
         $this->episode = $episode;
+        return $this;
     }
 
     /**
@@ -91,11 +101,13 @@ class Episode implements \JsonSerializable
     }
 
     /**
-     * @param array $characters
+     * @param array|null $characters
+     * @return Episode|null
      */
-    public function setCharacters(array $characters): void
+    public function setCharacters(?array $characters): ?Episode
     {
         $this->characters = $characters;
+        return $this;
     }
 
     /**
@@ -107,11 +119,13 @@ class Episode implements \JsonSerializable
     }
 
     /**
-     * @param string $url
+     * @param string|null $url
+     * @return Episode|null
      */
-    public function setUrl(string $url): void
+    public function setUrl(?string $url): ?Episode
     {
         $this->url = $url;
+        return $this;
     }
 
     /**
@@ -123,11 +137,13 @@ class Episode implements \JsonSerializable
     }
 
     /**
-     * @param string $created
+     * @param string|null $created
+     * @return Episode|null
      */
-    public function setCreated(string $created): void
+    public function setCreated(?string $created): ?Episode
     {
         $this->created = $created;
+        return $this;
     }
 
     public function jsonSerialize()

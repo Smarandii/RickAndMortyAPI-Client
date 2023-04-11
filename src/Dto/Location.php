@@ -1,22 +1,22 @@
 <?php
-
+declare(strict_types=1);
 namespace RickAndMortyAPI\Dto;
 
 class Location implements \JsonSerializable
 {
-    private int $id;
+    private ?int $id;
 
-    private string $name;
+    private ?string $name;
 
-    private string $type;
+    private ?string $type;
 
-    private string $dimension;
+    private ?string $dimension;
 
-    private array $residents;
+    private ?array $residents;
 
-    private string $url;
+    private ?string $url;
 
-    private string $created;
+    private ?string $created;
 
     /**
      * @return int
@@ -27,11 +27,13 @@ class Location implements \JsonSerializable
     }
 
     /**
-     * @param int $id
+     * @param int|null $id
+     * @return Location|null
      */
-    public function setId(int $id): void
+    public function setId(?int $id): ?Location
     {
         $this->id = $id;
+        return $this;
     }
 
     /**
@@ -43,11 +45,13 @@ class Location implements \JsonSerializable
     }
 
     /**
-     * @param string $name
+     * @param string|null $name
+     * @return Location|null
      */
-    public function setName(string $name): void
+    public function setName(?string $name): ?Location
     {
         $this->name = $name;
+        return $this;
     }
 
     /**
@@ -59,11 +63,13 @@ class Location implements \JsonSerializable
     }
 
     /**
-     * @param string $type
+     * @param string|null $type
+     * @return Location|null
      */
-    public function setType(string $type): void
+    public function setType(?string $type): ?Location
     {
         $this->type = $type;
+        return $this;
     }
 
     /**
@@ -75,11 +81,13 @@ class Location implements \JsonSerializable
     }
 
     /**
-     * @param string $dimension
+     * @param string|null $dimension
+     * @return Location|null
      */
-    public function setDimension(string $dimension): void
+    public function setDimension(?string $dimension): ?Location
     {
         $this->dimension = $dimension;
+        return $this;
     }
 
     /**
@@ -91,11 +99,13 @@ class Location implements \JsonSerializable
     }
 
     /**
-     * @param array $residents
+     * @param array|null $residents
+     * @return Location|null
      */
-    public function setResidents(array $residents): void
+    public function setResidents(?array $residents): ?Location
     {
         $this->residents = $residents;
+        return $this;
     }
 
     /**
@@ -107,11 +117,13 @@ class Location implements \JsonSerializable
     }
 
     /**
-     * @param string $url
+     * @param string|null $url
+     * @return Location|null
      */
-    public function setUrl(string $url): void
+    public function setUrl(?string $url): ?Location
     {
         $this->url = $url;
+        return $this;
     }
 
     /**
@@ -123,11 +135,13 @@ class Location implements \JsonSerializable
     }
 
     /**
-     * @param string $created
+     * @param string|null $created
+     * @return Location|null
      */
-    public function setCreated(string $created): void
+    public function setCreated(?string $created): ?Location
     {
         $this->created = $created;
+        return $this;
     }
 
     public function jsonSerialize()

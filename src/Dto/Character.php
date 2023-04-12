@@ -39,6 +39,7 @@ class Character implements \JsonSerializable
      */
     public function getId(): ?int
     {
+
         return $this->id;
     }
 
@@ -49,6 +50,7 @@ class Character implements \JsonSerializable
     public function setId(?int $id): ?Character
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -57,6 +59,7 @@ class Character implements \JsonSerializable
      */
     public function getName(): ?string
     {
+
         return $this->name;
     }
 
@@ -67,6 +70,7 @@ class Character implements \JsonSerializable
     public function setName(?string $name): ?Character
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -75,6 +79,7 @@ class Character implements \JsonSerializable
      */
     public function getStatus(): ?string
     {
+
         return $this->status;
     }
 
@@ -85,6 +90,7 @@ class Character implements \JsonSerializable
     public function setStatus(?string $status): ?Character
     {
         $this->status = $status;
+
         return $this;
     }
 
@@ -93,6 +99,7 @@ class Character implements \JsonSerializable
      */
     public function getSpecies(): ?string
     {
+
         return $this->species;
     }
 
@@ -103,6 +110,7 @@ class Character implements \JsonSerializable
     public function setSpecies(?string $species): ?Character
     {
         $this->species = $species;
+
         return $this;
     }
 
@@ -111,6 +119,7 @@ class Character implements \JsonSerializable
      */
     public function getType(): ?string
     {
+
         return $this->type;
     }
 
@@ -121,6 +130,7 @@ class Character implements \JsonSerializable
     public function setType(?string $type): ?Character
     {
         $this->type = $type;
+
         return $this;
     }
 
@@ -129,6 +139,7 @@ class Character implements \JsonSerializable
      */
     public function getGender(): ?string
     {
+
         return $this->gender;
     }
 
@@ -138,6 +149,7 @@ class Character implements \JsonSerializable
     public function setGender(?string $gender): ?Character
     {
         $this->gender = $gender;
+
         return $this;
     }
 
@@ -146,6 +158,7 @@ class Character implements \JsonSerializable
      */
     public function getOrigin(): ?Location
     {
+
         return $this->origin;
     }
 
@@ -156,6 +169,7 @@ class Character implements \JsonSerializable
     public function setOrigin(?Location $origin): ?Character
     {
         $this->origin = $origin;
+
         return $this;
     }
 
@@ -164,6 +178,7 @@ class Character implements \JsonSerializable
      */
     public function getLocation(): ?Location
     {
+
         return $this->location;
     }
 
@@ -174,6 +189,7 @@ class Character implements \JsonSerializable
     public function setLocation(?Location $location): ?Character
     {
         $this->location = $location;
+
         return $this;
     }
 
@@ -182,6 +198,7 @@ class Character implements \JsonSerializable
      */
     public function getImage(): ?string
     {
+
         return $this->image;
     }
 
@@ -192,6 +209,7 @@ class Character implements \JsonSerializable
     public function setImage(?string $image): ?Character
     {
         $this->image = $image;
+
         return $this;
     }
 
@@ -200,6 +218,7 @@ class Character implements \JsonSerializable
      */
     public function getEpisode(): ?array
     {
+
         return $this->episode;
     }
 
@@ -209,6 +228,7 @@ class Character implements \JsonSerializable
      */
     public function setEpisode(?array $episode): ?Character
     {
+
         $this->episode = $episode;
         return $this;
     }
@@ -218,6 +238,7 @@ class Character implements \JsonSerializable
      */
     public function getUrl(): ?string
     {
+
         return $this->url;
     }
 
@@ -228,6 +249,7 @@ class Character implements \JsonSerializable
     public function setUrl(?string $url): ?Character
     {
         $this->url = $url;
+
         return $this;
     }
 
@@ -236,6 +258,7 @@ class Character implements \JsonSerializable
      */
     public function getCreated(): ?string
     {
+
         return $this->created;
     }
 
@@ -245,12 +268,14 @@ class Character implements \JsonSerializable
     public function setCreated(?string $created): ?Character
     {
         $this->created = $created;
+
         return $this;
     }
 
 
     public function jsonSerialize()
     {
+
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),

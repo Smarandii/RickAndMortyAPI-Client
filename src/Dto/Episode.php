@@ -25,6 +25,7 @@ class Episode implements JsonSerializable
      */
     public function getId(): ?int
     {
+
         return $this->id;
     }
 
@@ -35,6 +36,7 @@ class Episode implements JsonSerializable
     public function setId(?int $id): ?Episode
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -43,6 +45,7 @@ class Episode implements JsonSerializable
      */
     public function getName(): ?string
     {
+
         return $this->name;
     }
 
@@ -53,6 +56,7 @@ class Episode implements JsonSerializable
     public function setName(?string $name): ?Episode
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -61,6 +65,7 @@ class Episode implements JsonSerializable
      */
     public function getAirDate(): ?string
     {
+
         return $this->air_date;
     }
 
@@ -71,6 +76,7 @@ class Episode implements JsonSerializable
     public function setAirDate(?string $air_date): ?Episode
     {
         $this->air_date = $air_date;
+
         return $this;
     }
 
@@ -79,6 +85,7 @@ class Episode implements JsonSerializable
      */
     public function getEpisode(): ?string
     {
+
         return $this->episode;
     }
 
@@ -89,6 +96,7 @@ class Episode implements JsonSerializable
     public function setEpisode(?string $episode): ?Episode
     {
         $this->episode = $episode;
+
         return $this;
     }
 
@@ -97,6 +105,7 @@ class Episode implements JsonSerializable
      */
     public function getCharacters(): ?array
     {
+
         return $this->characters;
     }
 
@@ -107,6 +116,7 @@ class Episode implements JsonSerializable
     public function setCharacters(?array $characters): ?Episode
     {
         $this->characters = $characters;
+
         return $this;
     }
 
@@ -115,6 +125,7 @@ class Episode implements JsonSerializable
      */
     public function getUrl(): ?string
     {
+
         return $this->url;
     }
 
@@ -125,6 +136,7 @@ class Episode implements JsonSerializable
     public function setUrl(?string $url): ?Episode
     {
         $this->url = $url;
+
         return $this;
     }
 
@@ -133,6 +145,7 @@ class Episode implements JsonSerializable
      */
     public function getCreated(): ?string
     {
+
         return $this->created;
     }
 
@@ -143,11 +156,13 @@ class Episode implements JsonSerializable
     public function setCreated(?string $created): ?Episode
     {
         $this->created = $created;
+
         return $this;
     }
 
     public function jsonSerialize()
     {
+
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),

@@ -13,6 +13,7 @@ class Config {
     }
 
     public static function getClientRootUrl() {
+
         return self::$clientRootUrl;
     }
 }

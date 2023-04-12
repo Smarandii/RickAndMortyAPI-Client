@@ -13,12 +13,11 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class Api
 {
     private HttpClientInterface $client;
-    private LoggerInterface $logger;
 
-    public function __construct(HttpClientInterface $client, LoggerInterface $logger)
+
+    public function __construct(HttpClientInterface $client)
     {
         $this->client = $client;
-        $this->logger = $logger;
     }
 
     public function getCharacter(int $id): ?Character {
@@ -27,11 +26,11 @@ class Api
             $content = $response->getContent();
             $object = $this->getObjectFromJson($content);
             $character = new Character($id);
+
             return $this->mapArrayToCharacter($object, $character);
         } catch (Exception $e) {
-            $this->logger->log(LogLevel::ERROR, $e->getMessage(), ["content" => $content]);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         }
-        return null;
     }
 
     public function getCharacters(): ?array {
@@ -45,11 +44,11 @@ class Api
                 $characterModel = $this->mapArrayToCharacter($character, $characterModel);
                 $characters[] = $characterModel;
             }
+
             return $characters;
         } catch (Exception $e) {
-            $this->logger->log(LogLevel::ERROR, $e->getMessage(), ["content" => $content]);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         }
-        return null;
     }
 
     private function mapArrayToCharacter(object $object, Character $character): Character
@@ -67,6 +66,7 @@ class Api
         $character->setEpisode($object->episode ?? null);
         $character->setUrl($object->url ?? null);
         $character->setCreated($object->url ?? null);
+
         return $character;
     }
 
@@ -76,11 +76,11 @@ class Api
             $content = $response->getContent();
             $object = $this->getObjectFromJson($content);
             $character = new Location();
+
             return $this->mapArrayToLocation($object, $character);
         } catch (Exception $e) {
-            $this->logger->log(LogLevel::ERROR, $e->getMessage(), ["content" => $content]);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         }
-        return null;
     }
 
     public function getLocations(): ?array {
@@ -94,12 +94,11 @@ class Api
                 $locationModel = $this->mapArrayToLocation($location, $locationModel);
                 $locations[] = $locationModel;
             }
+
             return $locations;
         } catch (Exception $e) {
-            $this->logger->log(LogLevel::ERROR, $e->getMessage(), ["content" => $content]);
+            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
         }
-
-        return null;
     }
 
     private function mapArrayToLocation(stdClass $object, Location $location): Location
@@ -111,6 +110,7 @@ class Api
         $location->setResidents($object->residents ?? null);
         $location->setUrl($object->url ?? null);
         $location->setCreated($object->created ?? null);
+
         return $location;
     }
 
@@ -120,6 +120,7 @@ class Api
         if (json_last_error() != "No error") {
             throw new Exception("Error occurred while decoding json string");
         }
+
         return $object;
     }
 }

@@ -23,6 +23,7 @@ class Location implements \JsonSerializable
      */
     public function getId(): ?int
     {
+
         return $this->id;
     }
 
@@ -33,6 +34,7 @@ class Location implements \JsonSerializable
     public function setId(?int $id): ?Location
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -41,6 +43,7 @@ class Location implements \JsonSerializable
      */
     public function getName(): ?string
     {
+
         return $this->name;
     }
 
@@ -51,6 +54,7 @@ class Location implements \JsonSerializable
     public function setName(?string $name): ?Location
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -59,6 +63,7 @@ class Location implements \JsonSerializable
      */
     public function getType(): ?string
     {
+
         return $this->type;
     }
 
@@ -69,6 +74,7 @@ class Location implements \JsonSerializable
     public function setType(?string $type): ?Location
     {
         $this->type = $type;
+
         return $this;
     }
 
@@ -77,6 +83,7 @@ class Location implements \JsonSerializable
      */
     public function getDimension(): ?string
     {
+
         return $this->dimension;
     }
 
@@ -87,6 +94,7 @@ class Location implements \JsonSerializable
     public function setDimension(?string $dimension): ?Location
     {
         $this->dimension = $dimension;
+
         return $this;
     }
 
@@ -95,6 +103,7 @@ class Location implements \JsonSerializable
      */
     public function getResidents(): ?array
     {
+
         return $this->residents;
     }
 
@@ -105,6 +114,7 @@ class Location implements \JsonSerializable
     public function setResidents(?array $residents): ?Location
     {
         $this->residents = $residents;
+
         return $this;
     }
 
@@ -113,6 +123,7 @@ class Location implements \JsonSerializable
      */
     public function getUrl(): ?string
     {
+
         return $this->url;
     }
 
@@ -123,6 +134,7 @@ class Location implements \JsonSerializable
     public function setUrl(?string $url): ?Location
     {
         $this->url = $url;
+
         return $this;
     }
 
@@ -131,6 +143,7 @@ class Location implements \JsonSerializable
      */
     public function getCreated(): ?string
     {
+
         return $this->created;
     }
 
@@ -140,12 +153,14 @@ class Location implements \JsonSerializable
      */
     public function setCreated(?string $created): ?Location
     {
+
         $this->created = $created;
         return $this;
     }
 
     public function jsonSerialize(): ?array
     {
+
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),

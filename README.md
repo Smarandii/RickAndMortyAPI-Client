@@ -26,7 +26,7 @@ Edit file services.yaml in you symfony project:
 ## Use Cases:
 
 ```php
-use RickAndMortyAPI\Service\Api;
+use RickAndMortyAPI\Api;
 
 $api_client = new Api();
 

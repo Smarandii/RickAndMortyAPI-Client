@@ -1,133 +1,177 @@
 <?php
-
+declare(strict_types=1);
 namespace RickAndMortyAPI\Dto;
 
-class Episode
+use JsonSerializable;
+
+class Episode implements JsonSerializable
 {
-    private int $id;
+    private ?int $id;
 
-    private string $name;
+    private ?string $name;
 
-    private string $air_date;
+    private ?string $air_date;
 
-    private string $episode;
+    private ?string $episode;
 
-    private array $characters;
+    private ?array $characters;
 
-    private string $url;
+    private ?string $url;
 
-    private string $created;
+    private ?string $created;
 
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
+
         return $this->id;
     }
 
     /**
-     * @param int $id
+     * @param int|null $id
+     * @return Episode|null
      */
-    public function setId(int $id): void
+    public function setId(?int $id): ?Episode
     {
         $this->id = $id;
+
+        return $this;
     }
 
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
+
         return $this->name;
     }
 
     /**
-     * @param string $name
+     * @param string|null $name
+     * @return Episode|null
      */
-    public function setName(string $name): void
+    public function setName(?string $name): ?Episode
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
      * @return string
      */
-    public function getAirDate(): string
+    public function getAirDate(): ?string
     {
+
         return $this->air_date;
     }
 
     /**
-     * @param string $air_date
+     * @param string|null $air_date
+     * @return Episode|null
      */
-    public function setAirDate(string $air_date): void
+    public function setAirDate(?string $air_date): ?Episode
     {
         $this->air_date = $air_date;
+
+        return $this;
     }
 
     /**
      * @return string
      */
-    public function getEpisode(): string
+    public function getEpisode(): ?string
     {
+
         return $this->episode;
     }
 
     /**
-     * @param string $episode
+     * @param string|null $episode
+     * @return Episode|null
      */
-    public function setEpisode(string $episode): void
+    public function setEpisode(?string $episode): ?Episode
     {
         $this->episode = $episode;
+
+        return $this;
     }
 
     /**
      * @return array
      */
-    public function getCharacters(): array
+    public function getCharacters(): ?array
     {
+
         return $this->characters;
     }
 
     /**
-     * @param array $characters
+     * @param array|null $characters
+     * @return Episode|null
      */
-    public function setCharacters(array $characters): void
+    public function setCharacters(?array $characters): ?Episode
     {
         $this->characters = $characters;
+
+        return $this;
     }
 
     /**
      * @return string
      */
-    public function getUrl(): string
+    public function getUrl(): ?string
     {
+
         return $this->url;
     }
 
     /**
-     * @param string $url
+     * @param string|null $url
+     * @return Episode|null
      */
-    public function setUrl(string $url): void
+    public function setUrl(?string $url): ?Episode
     {
         $this->url = $url;
+
+        return $this;
     }
 
     /**
      * @return string
      */
-    public function getCreated(): string
+    public function getCreated(): ?string
     {
+
         return $this->created;
     }
 
     /**
-     * @param string $created
+     * @param string|null $created
+     * @return Episode|null
      */
-    public function setCreated(string $created): void
+    public function setCreated(?string $created): ?Episode
     {
         $this->created = $created;
+
+        return $this;
+    }
+
+    public function jsonSerialize()
+    {
+
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'air_date' => $this->getAirDate(),
+            'episode' => $this->getEpisode(),
+            'characters' => $this->getCharacters(),
+            'url' => $this->getUrl(),
+            'created' => $this->getCreated(),
+        ];
     }
 
 }

@@ -3,61 +3,51 @@ declare(strict_types=1);
 namespace RickAndMortyAPI;
 
 use Exception;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 use RickAndMortyAPI\Dto\Character;
 use RickAndMortyAPI\Dto\Location;
 use stdClass;
-use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class Api
 {
     private HttpClientInterface $client;
+    private LoggerInterface $logger;
 
-    public function __construct(HttpClientInterface $client)
+    public function __construct(HttpClientInterface $client, LoggerInterface $logger)
     {
         $this->client = $client;
+        $this->logger = $logger;
     }
 
     public function getCharacter(int $id): ?Character {
         try {
-            $response = $this->client->request(Config::$GET_METHOD, Config::$CLIENT_ROOT_URL . Config::$CHARACTER_HANDLE . $id);
+            $response = $this->client->request(Config::GET_METHOD, Config::getClientRootUrl() . Config::CHARACTER_HANDLE . $id);
             $content = $response->getContent();
-            $object = json_decode($content);
+            $object = $this->getObjectFromJson($content);
             $character = new Character($id);
             return $this->mapArrayToCharacter($object, $character);
-        } catch (
-            Exception|
-            TransportExceptionInterface|
-            RedirectionExceptionInterface|
-            ServerExceptionInterface|
-            ClientExceptionInterface $e) {
-            error_log($e->getMessage());
+        } catch (Exception $e) {
+            $this->logger->log(LogLevel::ERROR, $e->getMessage(), ["content" => $content]);
         }
         return null;
     }
 
     public function getCharacters(): ?array {
         try {
-            $response = $this->client->request(Config::$GET_METHOD, Config::$CLIENT_ROOT_URL . Config::$CHARACTER_HANDLE);
+            $response = $this->client->request(Config::GET_METHOD, Config::getClientRootUrl() . Config::CHARACTER_HANDLE);
             $content = $response->getContent();
-            $object = json_decode($content);
+            $object = $this->getObjectFromJson($content);
             $characters = [];
             foreach ($object->results as $character) {
-                $character_model = new Character($character->id);
-                $character_model = $this->mapArrayToCharacter($character, $character_model);
-                $characters[] = $character_model;
+                $characterModel = new Character($character->id);
+                $characterModel = $this->mapArrayToCharacter($character, $characterModel);
+                $characters[] = $characterModel;
             }
             return $characters;
-        } catch (
-        Exception|
-        TransportExceptionInterface|
-        RedirectionExceptionInterface|
-        ServerExceptionInterface|
-        ClientExceptionInterface $e) {
-            error_log($e->getMessage());
+        } catch (Exception $e) {
+            $this->logger->log(LogLevel::ERROR, $e->getMessage(), ["content" => $content]);
         }
         return null;
     }
@@ -82,42 +72,33 @@ class Api
 
     public function getLocation(int $id): ?Location {
         try {
-            $response = $this->client->request(Config::$GET_METHOD, Config::$CLIENT_ROOT_URL . Config::$LOCATION_HANDLE . $id);
+            $response = $this->client->request(Config::GET_METHOD, Config::getClientRootUrl() . Config::LOCATION_HANDLE . $id);
             $content = $response->getContent();
-            $object = json_decode($content);
+            $object = $this->getObjectFromJson($content);
             $character = new Location();
             return $this->mapArrayToLocation($object, $character);
-        } catch (
-            Exception|
-            TransportExceptionInterface|
-            RedirectionExceptionInterface|
-            ServerExceptionInterface|
-            ClientExceptionInterface $e) {
-            error_log($e->getMessage());
+        } catch (Exception $e) {
+            $this->logger->log(LogLevel::ERROR, $e->getMessage(), ["content" => $content]);
         }
         return null;
     }
 
     public function getLocations(): ?array {
         try {
-            $response = $this->client->request(Config::$GET_METHOD, Config::$CLIENT_ROOT_URL . Config::$LOCATION_HANDLE);
+            $response = $this->client->request(Config::GET_METHOD, Config::getClientRootUrl() . Config::LOCATION_HANDLE);
             $content = $response->getContent();
-            $object = json_decode($content);
+            $object = $this->getObjectFromJson($content);
             $locations = [];
             foreach ($object->results as $location) {
-                $location_model = new Location();
-                $location_model = $this->mapArrayToLocation($location, $location_model);
-                $locations[] = $location_model;
+                $locationModel = new Location();
+                $locationModel = $this->mapArrayToLocation($location, $locationModel);
+                $locations[] = $locationModel;
             }
             return $locations;
-        } catch (
-            Exception|
-            TransportExceptionInterface|
-            RedirectionExceptionInterface|
-            ServerExceptionInterface|
-            ClientExceptionInterface $e) {
-            error_log($e->getMessage());
+        } catch (Exception $e) {
+            $this->logger->log(LogLevel::ERROR, $e->getMessage(), ["content" => $content]);
         }
+
         return null;
     }
 
@@ -131,5 +112,14 @@ class Api
         $location->setUrl($object->url ?? null);
         $location->setCreated($object->created ?? null);
         return $location;
+    }
+
+    private function getObjectFromJson(string $content)
+    {
+        $object = json_decode($content);
+        if (json_last_error() != "No error") {
+            throw new Exception("Error occurred while decoding json string");
+        }
+        return $object;
     }
 }

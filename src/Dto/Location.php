@@ -21,7 +21,7 @@ class Location implements \JsonSerializable
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -39,7 +39,7 @@ class Location implements \JsonSerializable
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -57,7 +57,7 @@ class Location implements \JsonSerializable
     /**
      * @return string
      */
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
@@ -75,7 +75,7 @@ class Location implements \JsonSerializable
     /**
      * @return string
      */
-    public function getDimension(): string
+    public function getDimension(): ?string
     {
         return $this->dimension;
     }
@@ -93,7 +93,7 @@ class Location implements \JsonSerializable
     /**
      * @return array
      */
-    public function getResidents(): array
+    public function getResidents(): ?array
     {
         return $this->residents;
     }
@@ -111,7 +111,7 @@ class Location implements \JsonSerializable
     /**
      * @return string
      */
-    public function getUrl(): string
+    public function getUrl(): ?string
     {
         return $this->url;
     }
@@ -129,7 +129,7 @@ class Location implements \JsonSerializable
     /**
      * @return string
      */
-    public function getCreated(): string
+    public function getCreated(): ?string
     {
         return $this->created;
     }
@@ -144,9 +144,17 @@ class Location implements \JsonSerializable
         return $this;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): ?array
     {
-        return get_object_vars($this);
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'type' => $this->getType(),
+            'dimension' => $this->getDimension(),
+            'residents' => $this->getResidents(),
+            'url' => $this->getUrl(),
+            'created' => $this->getCreated(),
+        ];
     }
 
 

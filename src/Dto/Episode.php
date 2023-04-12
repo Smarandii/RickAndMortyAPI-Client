@@ -23,7 +23,7 @@ class Episode implements JsonSerializable
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -41,7 +41,7 @@ class Episode implements JsonSerializable
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -59,7 +59,7 @@ class Episode implements JsonSerializable
     /**
      * @return string
      */
-    public function getAirDate(): string
+    public function getAirDate(): ?string
     {
         return $this->air_date;
     }
@@ -77,7 +77,7 @@ class Episode implements JsonSerializable
     /**
      * @return string
      */
-    public function getEpisode(): string
+    public function getEpisode(): ?string
     {
         return $this->episode;
     }
@@ -95,7 +95,7 @@ class Episode implements JsonSerializable
     /**
      * @return array
      */
-    public function getCharacters(): array
+    public function getCharacters(): ?array
     {
         return $this->characters;
     }
@@ -113,7 +113,7 @@ class Episode implements JsonSerializable
     /**
      * @return string
      */
-    public function getUrl(): string
+    public function getUrl(): ?string
     {
         return $this->url;
     }
@@ -131,7 +131,7 @@ class Episode implements JsonSerializable
     /**
      * @return string
      */
-    public function getCreated(): string
+    public function getCreated(): ?string
     {
         return $this->created;
     }
@@ -148,7 +148,15 @@ class Episode implements JsonSerializable
 
     public function jsonSerialize()
     {
-        return get_object_vars($this);
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'air_date' => $this->getAirDate(),
+            'episode' => $this->getEpisode(),
+            'characters' => $this->getCharacters(),
+            'url' => $this->getUrl(),
+            'created' => $this->getCreated(),
+        ];
     }
 
 }

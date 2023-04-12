@@ -34,7 +34,6 @@ class Api
     }
 
     public function getCharacters(): ?array {
-        try {
             $response = $this->client->request(Config::GET_METHOD, Config::getClientRootUrl() . Config::CHARACTER_HANDLE);
             $content = $response->getContent();
             $object = $this->getObjectFromJson($content);
@@ -46,9 +45,6 @@ class Api
             }
 
             return $characters;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
-        }
     }
 
     private function mapArrayToCharacter(object $object, Character $character): Character
@@ -71,20 +67,15 @@ class Api
     }
 
     public function getLocation(int $id): ?Location {
-        try {
             $response = $this->client->request(Config::GET_METHOD, Config::getClientRootUrl() . Config::LOCATION_HANDLE . $id);
             $content = $response->getContent();
             $object = $this->getObjectFromJson($content);
             $character = new Location();
 
             return $this->mapArrayToLocation($object, $character);
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
-        }
     }
 
     public function getLocations(): ?array {
-        try {
             $response = $this->client->request(Config::GET_METHOD, Config::getClientRootUrl() . Config::LOCATION_HANDLE);
             $content = $response->getContent();
             $object = $this->getObjectFromJson($content);
@@ -96,9 +87,6 @@ class Api
             }
 
             return $locations;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
-        }
     }
 
     private function mapArrayToLocation(stdClass $object, Location $location): Location

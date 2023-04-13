@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 namespace RickAndMortyAPI\Dto;
-use RickAndMortyAPI\Dto\Location;
 
 class Character implements \JsonSerializable
 {
@@ -29,7 +28,7 @@ class Character implements \JsonSerializable
     
     private ?string $created;
 
-    public function __construct($id)
+    public function __construct($id=null)
     {
         $this->id = $id;
     }
@@ -40,7 +39,7 @@ class Character implements \JsonSerializable
     public function getId(): ?int
     {
 
-        return $this->id;
+        return $this->id ?? null;
     }
 
     /**
@@ -60,7 +59,7 @@ class Character implements \JsonSerializable
     public function getName(): ?string
     {
 
-        return $this->name;
+        return $this->name ?? null;
     }
 
     /**
@@ -80,7 +79,7 @@ class Character implements \JsonSerializable
     public function getStatus(): ?string
     {
 
-        return $this->status;
+        return $this->status ?? null;
     }
 
     /**
@@ -100,7 +99,7 @@ class Character implements \JsonSerializable
     public function getSpecies(): ?string
     {
 
-        return $this->species;
+        return $this->species ?? null;
     }
 
     /**
@@ -120,7 +119,7 @@ class Character implements \JsonSerializable
     public function getType(): ?string
     {
 
-        return $this->type;
+        return $this->type ?? null;
     }
 
     /**
@@ -140,7 +139,7 @@ class Character implements \JsonSerializable
     public function getGender(): ?string
     {
 
-        return $this->gender;
+        return $this->gender ?? null;
     }
 
     /**
@@ -159,7 +158,7 @@ class Character implements \JsonSerializable
     public function getOrigin(): ?Location
     {
 
-        return $this->origin;
+        return $this->origin ?? null;
     }
 
     /**
@@ -179,7 +178,7 @@ class Character implements \JsonSerializable
     public function getLocation(): ?Location
     {
 
-        return $this->location;
+        return $this->location ?? null;
     }
 
     /**
@@ -199,7 +198,7 @@ class Character implements \JsonSerializable
     public function getImage(): ?string
     {
 
-        return $this->image;
+        return $this->image ?? null;
     }
 
     /**
@@ -219,7 +218,7 @@ class Character implements \JsonSerializable
     public function getEpisode(): ?array
     {
 
-        return $this->episode;
+        return $this->episode ?? null;
     }
 
     /**
@@ -239,7 +238,7 @@ class Character implements \JsonSerializable
     public function getUrl(): ?string
     {
 
-        return $this->url;
+        return $this->url ?? null;
     }
 
     /**
@@ -259,7 +258,7 @@ class Character implements \JsonSerializable
     public function getCreated(): ?string
     {
 
-        return $this->created;
+        return $this->created ?? null;
     }
 
     /**
@@ -275,20 +274,22 @@ class Character implements \JsonSerializable
 
     public function jsonSerialize()
     {
-
-        return [
-            'id' => $this->getId(),
-            'name' => $this->getName(),
-            'status' => $this->getStatus(),
-            'species' => $this->getSpecies(),
-            'type' => $this->getType(),
-            'origin' => $this->getOrigin(),
-            'location' => $this->getLocation(),
-            'image' => $this->getImage(),
-            'episode' => $this->getEpisode(),
-            'url' => $this->getUrl(),
-            'created' => $this->getCreated(),
-        ];
+        return array_filter([
+            'id' => $this->id,
+            'name' => $this->name,
+            'status' => $this->status,
+            'species' => $this->species,
+            'type' => $this->type,
+            'gender' => $this->gender,
+            'origin' => $this->origin,
+            'location' => $this->location,
+            'image' => $this->image,
+            'episode' => $this->episode,
+            'url' => $this->url,
+            'created' => $this->created
+        ], function ($value) {
+            return $value !== null;
+        });
     }
 
 }

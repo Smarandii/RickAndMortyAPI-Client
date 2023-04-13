@@ -2,12 +2,15 @@
 declare(strict_types=1);
 namespace RickAndMortyAPI;
 
-use Exception;
-use Psr\Log\LoggerInterface;
-use Psr\Log\LogLevel;
 use RickAndMortyAPI\Dto\Character;
+use RickAndMortyAPI\Dto\Episode;
+use RickAndMortyAPI\Dto\EpisodeFilter;
+use RickAndMortyAPI\Dto\FilterInterface;
 use RickAndMortyAPI\Dto\Location;
-use stdClass;
+use RickAndMortyAPI\Dto\CharacterFilter;
+use RickAndMortyAPI\Dto\LocationFilter;
+
+use Exception;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class Api
@@ -21,94 +24,135 @@ class Api
     }
 
     public function getCharacter(int $id): ?Character {
-        try {
-            $response = $this->client->request(Config::GET_METHOD, Config::getClientRootUrl() . Config::CHARACTER_HANDLE . $id);
-            $content = $response->getContent();
-            $object = $this->getObjectFromJson($content);
-            $character = new Character($id);
+        $response = $this->client->request(Config::GET_METHOD, Config::getClientRootUrl() . Config::CHARACTER_HANDLE . $id);
+        $content = $response->getContent();
+        $assocArray = $this->getAssocArrayFromJson($content);
+        $character = new Character($id);
+        return $this->mapAssocArrayToCharacter($assocArray, $character);
+    }
 
-            return $this->mapArrayToCharacter($object, $character);
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage(), $e->getCode(), $e->getPrevious());
+    public function getCharacters(CharacterFilter $filter = null): ?array {
+        $assocArray = $this->getAssocArray($filter, Config::CHARACTER_HANDLE);
+        $characters = [];
+        foreach ($assocArray['results'] as $character) {
+            $characterModel = new Character($character->id);
+            $characterModel = $this->mapAssocArrayToCharacter($character, $characterModel);
+            $characters[] = $characterModel;
         }
+
+        return $characters;
     }
 
-    public function getCharacters(): ?array {
-            $response = $this->client->request(Config::GET_METHOD, Config::getClientRootUrl() . Config::CHARACTER_HANDLE);
-            $content = $response->getContent();
-            $object = $this->getObjectFromJson($content);
-            $characters = [];
-            foreach ($object->results as $character) {
-                $characterModel = new Character($character->id);
-                $characterModel = $this->mapArrayToCharacter($character, $characterModel);
-                $characters[] = $characterModel;
-            }
-
-            return $characters;
-    }
-
-    private function mapArrayToCharacter(object $object, Character $character): Character
+    private function mapAssocArrayToCharacter(array $assocArray, Character $character): Character
     {
-        $character->setId($object->id ?? null);
-        $character->setName($object->name ?? null);
-        $character->setStatus(($object->status ?? null));
-        $character->setSpecies(($object->species ?? null));
-        $character->setType($object->type ?? null);
-        $character->setGender($object->gender ?? null);
+        $character->setId($assocArray['id'] ?? null);
+        $character->setName($assocArray['name'] ?? null);
+        $character->setStatus($assocArray['status'] ?? null);
+        $character->setSpecies($assocArray['species'] ?? null);
+        $character->setType($assocArray['type'] ?? null);
+        $character->setGender($assocArray['gender'] ?? null);
+
+        $origin = new Location();
+        $origin = $this->mapAssocArrayToLocation($assocArray['origin'] ?? [], $origin);
+        $character->setOrigin($origin);
+
         $location = new Location();
-        $character->setOrigin($this->mapArrayToLocation($object->origin, $location) ?? null);
-        $character->setLocation($this->mapArrayToLocation($object->location, $location) ?? null);
-        $character->setImage($object->image ?? null);
-        $character->setEpisode($object->episode ?? null);
-        $character->setUrl($object->url ?? null);
-        $character->setCreated($object->url ?? null);
+        $location = $this->mapAssocArrayToLocation($assocArray['location'] ?? [], $location);
+        $character->setLocation($location);
+
+        $character->setImage($assocArray['image'] ?? null);
+        $character->setEpisode($assocArray['episode'] ?? null);
+        $character->setUrl($assocArray['url'] ?? null);
+        $character->setCreated($assocArray['created'] ?? null);
 
         return $character;
     }
 
     public function getLocation(int $id): ?Location {
-            $response = $this->client->request(Config::GET_METHOD, Config::getClientRootUrl() . Config::LOCATION_HANDLE . $id);
-            $content = $response->getContent();
-            $object = $this->getObjectFromJson($content);
-            $character = new Location();
+        $response = $this->client->request(Config::GET_METHOD, Config::getClientRootUrl() . Config::LOCATION_HANDLE . $id);
+        $content = $response->getContent();
+        $object = $this->getAssocArrayFromJson($content);
+        $character = new Location();
 
-            return $this->mapArrayToLocation($object, $character);
+        return $this->mapAssocArrayToLocation($object, $character);
     }
 
-    public function getLocations(): ?array {
-            $response = $this->client->request(Config::GET_METHOD, Config::getClientRootUrl() . Config::LOCATION_HANDLE);
-            $content = $response->getContent();
-            $object = $this->getObjectFromJson($content);
-            $locations = [];
-            foreach ($object->results as $location) {
-                $locationModel = new Location();
-                $locationModel = $this->mapArrayToLocation($location, $locationModel);
-                $locations[] = $locationModel;
-            }
+    public function getLocations(LocationFilter $filter = null): ?array {
+        $assocArray = $this->getAssocArray($filter, Config::LOCATION_HANDLE);
+        $locations = [];
+        foreach ($assocArray['results'] as $location) {
+            $locationModel = new Location();
+            $locationModel = $this->mapAssocArrayToLocation($location, $locationModel);
+            $locations[] = $locationModel;
+        }
 
-            return $locations;
+        return $locations;
     }
 
-    private function mapArrayToLocation(stdClass $object, Location $location): Location
+    private function mapAssocArrayToLocation(array $assocArray, Location $location): Location
     {
-        $location->setId($object->id ?? null);
-        $location->setName($object->name ?? null);
-        $location->setType($object->type ?? null);
-        $location->setDimension($object->dimension ?? null);
-        $location->setResidents($object->residents ?? null);
-        $location->setUrl($object->url ?? null);
-        $location->setCreated($object->created ?? null);
+        $location->setId($assocArray['id'] ?? null);
+        $location->setName($assocArray['name'] ?? null);
+        $location->setType($assocArray['type'] ?? null);
+        $location->setDimension($assocArray['dimension'] ?? null);
+        $location->setResidents($assocArray['residents'] ?? null);
+        $location->setUrl($assocArray['url'] ?? null);
+        $location->setCreated($assocArray['created'] ?? null);
 
         return $location;
     }
 
-    private function getObjectFromJson(string $content)
+    public function getEpisode(int $id): ?Episode {
+        $response = $this->client->request(Config::GET_METHOD, Config::getClientRootUrl() . Config::EPISODE_HANDLE . $id);
+        $content = $response->getContent();
+        $assocArray = $this->getAssocArrayFromJson($content);
+        $episode = new Episode();
+
+        return $this->mapAssocArrayToEpisode($assocArray, $episode);
+    }
+
+    public function getEpisodes(EpisodeFilter $filter): ?array {
+        $assocArray = $this->getAssocArray($filter, Config::EPISODE_HANDLE);
+        $episodes = [];
+        foreach ($assocArray['results'] as $location) {
+            $episodeModel = new Episode();
+            $episodeModel = $this->mapAssocArrayToEpisode($location, $episodeModel);
+            $episodes[] = $episodeModel;
+        }
+
+        return $episodes;
+    }
+
+    private function mapAssocArrayToEpisode(array $assocArray, Episode $location): Episode
     {
-        $object = json_decode($content);
+        $location->setId($assocArray['id'] ?? null);
+        $location->setName($assocArray['name'] ?? null);
+        $location->setAirDate($assocArray['air_date'] ?? null);
+        $location->setEpisode($assocArray['episode'] ?? null);
+        $location->setCharacters($assocArray['characters'] ?? null);
+        $location->setUrl($assocArray['url'] ?? null);
+        $location->setCreated($assocArray['created'] ?? null);
+
+        return $location;
+    }
+
+    private function getAssocArrayFromJson(string $content)
+    {
+        $object = json_decode($content, true);
         if (json_last_error() != "No error") {
             throw new Exception("Error occurred while decoding json string");
         }
 
         return $object;
+    }
+
+    private function getAssocArray(?FilterInterface $filter, $handle)
+    {
+        if ($filter != null)
+            $response = $this->client->request(Config::GET_METHOD, Config::getClientRootUrl() . $handle . $filter->getQueryParamsString());
+        else
+            $response = $this->client->request(Config::GET_METHOD, Config::getClientRootUrl() . $handle);
+        $content = $response->getContent();
+        return $this->getAssocArrayFromJson($content);
     }
 }

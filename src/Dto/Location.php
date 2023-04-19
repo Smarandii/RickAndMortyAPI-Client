@@ -24,7 +24,7 @@ class Location implements \JsonSerializable
     public function getId(): ?int
     {
 
-        return $this->id;
+        return $this->id ?? null;
     }
 
     /**
@@ -44,7 +44,7 @@ class Location implements \JsonSerializable
     public function getName(): ?string
     {
 
-        return $this->name;
+        return $this->name ?? null;
     }
 
     /**
@@ -64,7 +64,7 @@ class Location implements \JsonSerializable
     public function getType(): ?string
     {
 
-        return $this->type;
+        return $this->type ?? null;
     }
 
     /**
@@ -84,7 +84,7 @@ class Location implements \JsonSerializable
     public function getDimension(): ?string
     {
 
-        return $this->dimension;
+        return $this->dimension ?? null;
     }
 
     /**
@@ -104,7 +104,7 @@ class Location implements \JsonSerializable
     public function getResidents(): ?array
     {
 
-        return $this->residents;
+        return $this->residents ?? null;
     }
 
     /**
@@ -124,7 +124,7 @@ class Location implements \JsonSerializable
     public function getUrl(): ?string
     {
 
-        return $this->url;
+        return $this->url ?? null;
     }
 
     /**
@@ -144,7 +144,7 @@ class Location implements \JsonSerializable
     public function getCreated(): ?string
     {
 
-        return $this->created;
+        return $this->created ?? null;
     }
 
     /**
@@ -158,18 +158,19 @@ class Location implements \JsonSerializable
         return $this;
     }
 
-    public function jsonSerialize(): ?array
+    public function jsonSerialize()
     {
-
-        return [
-            'id' => $this->getId(),
-            'name' => $this->getName(),
-            'type' => $this->getType(),
-            'dimension' => $this->getDimension(),
-            'residents' => $this->getResidents(),
-            'url' => $this->getUrl(),
-            'created' => $this->getCreated(),
-        ];
+        return array_filter([
+            'id' => $this->id,
+            'name' => $this->name,
+            'type' => $this->type,
+            'dimension' => $this->dimension,
+            'residents' => $this->residents,
+            'url' => $this->url,
+            'created' => $this->created
+        ], function ($value) {
+            return $value !== null;
+        });
     }
 
 

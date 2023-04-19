@@ -12,7 +12,9 @@ services:
       - ./:/app
 
   php:
-    build: ./
+    build:
+      context: .
+      dockerfile: Dockerfile
     working_dir: /app
     volumes:
       - ./:/app

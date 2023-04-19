@@ -8,6 +8,9 @@ RUN apt-get -y install git zip libpq-dev
 
 RUN docker-php-ext-install pdo pdo_pgsql pgsql
 
+RUN pecl install xdebug-2.9.8 && \
+    docker-php-ext-enable xdebug
+
 RUN curl -sL https://getcomposer.org/installer | php -- --install-dir /usr/bin --filename composer
 
 CMD ["php-fpm"]

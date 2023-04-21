@@ -1,15 +1,17 @@
 <?php
 declare(strict_types=1);
-require_once __DIR__ . '/../vendor/autoload.php';
+namespace Tests;
 
 use RickAndMortyAPI\Api;
 use RickAndMortyAPI\Dto\Episode;
 use RickAndMortyAPI\Dto\EpisodeFilter;
-use Symfony\Component\HttpClient\HttpClient;
 use PHPUnit\Framework\TestCase;
+
+
 class EpisodeTest extends TestCase {
+    use RickAndMortyClientTestCaseTrait;
     public function testGetEpisode() {
-        $client = HttpClient::create();
+        $client = $this->getHttpClient();
         $api_client = new Api($client);
         $expected = '{"id":1,"name":"Pilot","air_date":"December 2, 2013","episode":"S01E01","characters":["https://rickandmortyapi.com/api/character/1","https://rickandmortyapi.com/api/character/2","https://rickandmortyapi.com/api/character/35","https://rickandmortyapi.com/api/character/38","https://rickandmortyapi.com/api/character/62","https://rickandmortyapi.com/api/character/92","https://rickandmortyapi.com/api/character/127","https://rickandmortyapi.com/api/character/144","https://rickandmortyapi.com/api/character/158","https://rickandmortyapi.com/api/character/175","https://rickandmortyapi.com/api/character/179","https://rickandmortyapi.com/api/character/181","https://rickandmortyapi.com/api/character/239","https://rickandmortyapi.com/api/character/249","https://rickandmortyapi.com/api/character/271","https://rickandmortyapi.com/api/character/338","https://rickandmortyapi.com/api/character/394","https://rickandmortyapi.com/api/character/395","https://rickandmortyapi.com/api/character/435"],"url":"https://rickandmortyapi.com/api/episode/1","created":"2017-11-10T12:56:33.798Z"}';
         $actual = json_encode($api_client->getEpisode(1), JSON_UNESCAPED_SLASHES);
@@ -17,7 +19,7 @@ class EpisodeTest extends TestCase {
     }
 
     public function testGetEpisodes() {
-        $client = HttpClient::create();
+        $client = $this->getHttpClient();
         $api_client = new Api($client);
         $filter = new EpisodeFilter(['name' => 'Pilot', 'episode'=>'S01E01']);
         $expected = '[{"id":1,"name":"Pilot","air_date":"December 2, 2013","episode":"S01E01","characters":["https://rickandmortyapi.com/api/character/1","https://rickandmortyapi.com/api/character/2","https://rickandmortyapi.com/api/character/35","https://rickandmortyapi.com/api/character/38","https://rickandmortyapi.com/api/character/62","https://rickandmortyapi.com/api/character/92","https://rickandmortyapi.com/api/character/127","https://rickandmortyapi.com/api/character/144","https://rickandmortyapi.com/api/character/158","https://rickandmortyapi.com/api/character/175","https://rickandmortyapi.com/api/character/179","https://rickandmortyapi.com/api/character/181","https://rickandmortyapi.com/api/character/239","https://rickandmortyapi.com/api/character/249","https://rickandmortyapi.com/api/character/271","https://rickandmortyapi.com/api/character/338","https://rickandmortyapi.com/api/character/394","https://rickandmortyapi.com/api/character/395","https://rickandmortyapi.com/api/character/435"],"url":"https://rickandmortyapi.com/api/episode/1","created":"2017-11-10T12:56:33.798Z"}]';
@@ -26,7 +28,7 @@ class EpisodeTest extends TestCase {
     }
 
     public function testEpisodeGetters() {
-        $client = HttpClient::create();
+        $client = $this->getHttpClient();
         $api_client = new Api($client);
         $location = $api_client->getEpisode(1);
 

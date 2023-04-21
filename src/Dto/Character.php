@@ -28,10 +28,6 @@ class Character implements \JsonSerializable
     
     private ?string $created;
 
-    public function __construct($id=null)
-    {
-        $this->id = $id;
-    }
 
     /**
      * @return int

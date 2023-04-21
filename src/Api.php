@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace RickAndMortyAPI;
 
+use http\Exception\RuntimeException;
 use RickAndMortyAPI\Dto\Character;
 use RickAndMortyAPI\Dto\Episode;
 use RickAndMortyAPI\Dto\EpisodeFilter;
@@ -32,7 +33,7 @@ class Api
         $response = $this->client->request(Api::GET_METHOD, Api::CHARACTER_HANDLE . $id);
         $content = $response->getContent();
         $assocArray = $this->getAssocArrayFromJson($content);
-        $character = new Character($id);
+        $character = new Character();
         return $this->mapAssocArrayToCharacter($assocArray, $character);
     }
 
@@ -40,7 +41,7 @@ class Api
         $assocArray = $this->getAssocArray($filter, Api::CHARACTER_HANDLE);
         $characters = [];
         foreach ($assocArray['results'] as $character) {
-            $characterModel = new Character($character->id);
+            $characterModel = new Character();
             $characterModel = $this->mapAssocArrayToCharacter($character, $characterModel);
             $characters[] = $characterModel;
         }
@@ -145,7 +146,7 @@ class Api
     {
         $object = json_decode($content, true);
         if (json_last_error() != JSON_ERROR_NONE) {
-            throw new Exception("Error occurred while decoding json string");
+            throw new RuntimeException("Error occurred while decoding json string");
         }
 
         return $object;

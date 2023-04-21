@@ -6,6 +6,8 @@ namespace RickAndMortyAPI\Dto;
 
 class CharacterFilter implements FilterInterface
 {
+    private ?array $ids;
+
     private ?string $name;
 
     private ?string $status;
@@ -15,6 +17,24 @@ class CharacterFilter implements FilterInterface
     private ?string $type;
 
     private ?string $gender;
+
+    /**
+     * @return array|null
+     */
+    public function getIds(): ?array
+    {
+        return $this->ids;
+    }
+
+    /**
+     * @param array|null $ids
+     * @return CharacterFilter
+     */
+    public function setIds(?array $ids): CharacterFilter
+    {
+        $this->ids = $ids;
+        return $this;
+    }
 
     /**
      * @return string|null
@@ -109,6 +129,7 @@ class CharacterFilter implements FilterInterface
 
     public function __construct(array $filter_params = [])
     {
+        $this->ids = $filter_params['ids'] ?? null;
         $this->name = $filter_params['name'] ?? null;
         $this->status = $filter_params['status'] ?? null;
         $this->species = $filter_params['species'] ?? null;
@@ -118,6 +139,8 @@ class CharacterFilter implements FilterInterface
 
     public function getQueryParamsString(): string
     {
+        if (isset($this->ids) && $this->ids != null)
+            return implode(',', $this->ids);
         return '?' . (isset($this->name) ? 'name=' . $this->name : '')
             . (isset($this->status) ? '&status=' . $this->status : '')
             . (isset($this->species) ? '&species=' . $this->species : '')

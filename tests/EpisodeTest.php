@@ -18,11 +18,20 @@ class EpisodeTest extends TestCase {
         $this->assertEquals($expected, $actual);
     }
 
-    public function testGetEpisodes() {
+    public function testGetEpisodesByNameAndEpisode() {
         $client = $this->getHttpClient();
         $api_client = new Api($client);
         $filter = new EpisodeFilter(['name' => 'Pilot', 'episode'=>'S01E01']);
         $expected = '[{"id":1,"name":"Pilot","air_date":"December 2, 2013","episode":"S01E01","characters":["https://rickandmortyapi.com/api/character/1","https://rickandmortyapi.com/api/character/2","https://rickandmortyapi.com/api/character/35","https://rickandmortyapi.com/api/character/38","https://rickandmortyapi.com/api/character/62","https://rickandmortyapi.com/api/character/92","https://rickandmortyapi.com/api/character/127","https://rickandmortyapi.com/api/character/144","https://rickandmortyapi.com/api/character/158","https://rickandmortyapi.com/api/character/175","https://rickandmortyapi.com/api/character/179","https://rickandmortyapi.com/api/character/181","https://rickandmortyapi.com/api/character/239","https://rickandmortyapi.com/api/character/249","https://rickandmortyapi.com/api/character/271","https://rickandmortyapi.com/api/character/338","https://rickandmortyapi.com/api/character/394","https://rickandmortyapi.com/api/character/395","https://rickandmortyapi.com/api/character/435"],"url":"https://rickandmortyapi.com/api/episode/1","created":"2017-11-10T12:56:33.798Z"}]';
+        $actual = json_encode($api_client->getEpisodes($filter), JSON_UNESCAPED_SLASHES);
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testGetEpisodesByMultipleIds() {
+        $client = $this->getHttpClient();
+        $api_client = new Api($client);
+        $filter = new EpisodeFilter(['ids' => [39,40]]);
+        $expected = '[{"id":39,"name":"The Vat of Acid Episode","air_date":"May 17, 2020","episode":"S04E08","characters":["https://rickandmortyapi.com/api/character/1","https://rickandmortyapi.com/api/character/2","https://rickandmortyapi.com/api/character/4","https://rickandmortyapi.com/api/character/3","https://rickandmortyapi.com/api/character/5","https://rickandmortyapi.com/api/character/240","https://rickandmortyapi.com/api/character/180","https://rickandmortyapi.com/api/character/648","https://rickandmortyapi.com/api/character/649","https://rickandmortyapi.com/api/character/650","https://rickandmortyapi.com/api/character/651","https://rickandmortyapi.com/api/character/652","https://rickandmortyapi.com/api/character/653","https://rickandmortyapi.com/api/character/654","https://rickandmortyapi.com/api/character/655","https://rickandmortyapi.com/api/character/656","https://rickandmortyapi.com/api/character/657","https://rickandmortyapi.com/api/character/658","https://rickandmortyapi.com/api/character/659","https://rickandmortyapi.com/api/character/660","https://rickandmortyapi.com/api/character/661"],"url":"https://rickandmortyapi.com/api/episode/39","created":"2020-08-06T05:51:07.419Z"},{"id":40,"name":"Childrick of Mort","air_date":"May 24, 2020","episode":"S04E09","characters":["https://rickandmortyapi.com/api/character/1","https://rickandmortyapi.com/api/character/2","https://rickandmortyapi.com/api/character/3","https://rickandmortyapi.com/api/character/4","https://rickandmortyapi.com/api/character/5","https://rickandmortyapi.com/api/character/662","https://rickandmortyapi.com/api/character/663","https://rickandmortyapi.com/api/character/664","https://rickandmortyapi.com/api/character/665","https://rickandmortyapi.com/api/character/666"],"url":"https://rickandmortyapi.com/api/episode/40","created":"2020-08-06T05:51:25.458Z"}]';
         $actual = json_encode($api_client->getEpisodes($filter), JSON_UNESCAPED_SLASHES);
         $this->assertEquals($expected, $actual);
     }

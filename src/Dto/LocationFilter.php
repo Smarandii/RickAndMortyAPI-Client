@@ -6,6 +6,25 @@ namespace RickAndMortyAPI\Dto;
 
 class LocationFilter implements FilterInterface
 {
+    private ?array $ids;
+
+    /**
+     * @return array|null
+     */
+    public function getIds(): ?array
+    {
+        return $this->ids;
+    }
+
+    /**
+     * @param array|null $ids
+     * @return LocationFilter
+     */
+    public function setIds(?array $ids): LocationFilter
+    {
+        $this->ids = $ids;
+        return $this;
+    }
     private ?string $name;
 
     private ?string $type;
@@ -69,6 +88,7 @@ class LocationFilter implements FilterInterface
 
     public function __construct(array $filter_params = [])
     {
+        $this->ids = $filter_params['ids'] ?? null;
         $this->name = $filter_params['name'] ?? null;
         $this->type = $filter_params['type'] ?? null;
         $this->dimension = $filter_params['dimension'] ?? null;
@@ -76,6 +96,8 @@ class LocationFilter implements FilterInterface
 
     public function getQueryParamsString(): string
     {
+        if (isset($this->ids) && $this->ids != null)
+            return implode(',', $this->ids);
         return '?' . (isset($this->name) ? 'name=' . $this->name : '')
             . (isset($this->type) ? '&type=' . $this->type : '')
             . (isset($this->dimension) ? '&dimension=' . $this->dimension : '');

@@ -40,7 +40,10 @@ class Api
     public function getCharacters(CharacterFilter $filter = null): ?array {
         $assocArray = $this->getAssocArray($filter, Api::CHARACTER_HANDLE);
         $characters = [];
-        foreach ($assocArray['results'] as $character) {
+        if (isset($assocArray['results']))
+            $assocArray = $assocArray['results'];
+
+        foreach ($assocArray as $character) {
             $characterModel = new Character();
             $characterModel = $this->mapAssocArrayToCharacter($character, $characterModel);
             $characters[] = $characterModel;
@@ -86,7 +89,9 @@ class Api
     public function getLocations(LocationFilter $filter = null): ?array {
         $assocArray = $this->getAssocArray($filter, Api::LOCATION_HANDLE);
         $locations = [];
-        foreach ($assocArray['results'] as $location) {
+        if (isset($assocArray['results']))
+            $assocArray = $assocArray['results'];
+        foreach ($assocArray as $location) {
             $locationModel = new Location();
             $locationModel = $this->mapAssocArrayToLocation($location, $locationModel);
             $locations[] = $locationModel;
@@ -119,8 +124,10 @@ class Api
 
     public function getEpisodes(EpisodeFilter $filter): ?array {
         $assocArray = $this->getAssocArray($filter, Api::EPISODE_HANDLE);
+        if (isset($assocArray['results']))
+            $assocArray = $assocArray['results'];
         $episodes = [];
-        foreach ($assocArray['results'] as $location) {
+        foreach ($assocArray as $location) {
             $episodeModel = new Episode();
             $episodeModel = $this->mapAssocArrayToEpisode($location, $episodeModel);
             $episodes[] = $episodeModel;

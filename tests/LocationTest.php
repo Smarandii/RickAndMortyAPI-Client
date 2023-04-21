@@ -19,7 +19,7 @@ class LocationTest  extends TestCase {
         $this->assertEquals($expected, $actual);
     }
 
-    public function testGetLocations() {
+    public function testGetLocationsByNameAndType() {
         $client = $this->getHttpClient();
         $api_client = new Api($client);
         $filter = new LocationFilter(['name' => 'Earth (C-137)', 'type'=>'planet']);
@@ -27,6 +27,16 @@ class LocationTest  extends TestCase {
         $actual = json_encode($api_client->getLocations($filter), JSON_UNESCAPED_SLASHES);
         $this->assertEquals($expected, $actual);
     }
+
+    public function testGetLocationsByMultipleIds() {
+        $client = $this->getHttpClient();
+        $api_client = new Api($client);
+        $filter = new LocationFilter(['ids' => [40,39]]);
+        $expected = '[{"id":39,"name":"Galactic Federation Prison","type":"Space station","dimension":"unknown","residents":["https://rickandmortyapi.com/api/character/150"],"url":"https://rickandmortyapi.com/api/location/39","created":"2017-12-29T12:02:33.513Z"},{"id":40,"name":"Gazorpazorp","type":"Planet","dimension":"unknown","residents":["https://rickandmortyapi.com/api/character/168","https://rickandmortyapi.com/api/character/211","https://rickandmortyapi.com/api/character/376"],"url":"https://rickandmortyapi.com/api/location/40","created":"2017-12-29T12:31:50.313Z"}]';
+        $actual = json_encode($api_client->getLocations($filter), JSON_UNESCAPED_SLASHES);
+        $this->assertEquals($expected, $actual);
+    }
+
 
     public function testLocationGetters() {
         $client = $this->getHttpClient();

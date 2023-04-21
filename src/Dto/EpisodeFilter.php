@@ -6,11 +6,31 @@ namespace RickAndMortyAPI\Dto;
 
 class EpisodeFilter implements FilterInterface {
 
+    private ?array $ids;
+
+    /**
+     * @return array|null
+     */
+    public function getIds(): ?array
+    {
+        return $this->ids;
+    }
+
+    /**
+     * @param array|null $ids
+     * @return EpisodeFilter
+     */
+    public function setIds(?array $ids): EpisodeFilter
+    {
+        $this->ids = $ids;
+        return $this;
+    }
     private ?string $name;
     private ?string $episode;
 
     public function __construct(array $filter_params = [])
     {
+        $this->ids = $filter_params['ids'] ?? null;
         $this->name = $filter_params['name'] ?? null;
         $this->episode = $filter_params['episode'] ?? null;
     }
@@ -54,6 +74,8 @@ class EpisodeFilter implements FilterInterface {
 
     public function getQueryParamsString(): string
     {
+        if (isset($this->ids) && $this->ids != null)
+            return implode(',', $this->ids);
         return '?' . (isset($this->name) ? 'name=' . $this->name : '')
             . (isset($this->episode) ? '&episode=' . $this->episode : '');
     }

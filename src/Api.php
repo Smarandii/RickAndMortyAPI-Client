@@ -99,11 +99,14 @@ class Api
         return $locations;
     }
 
-    private function getIdFromUrl($url): int
+    private function getIdFromUrl($url): ?int
     {
-        $pattern = "/\d+/";
-        preg_match($pattern, $url, $matches);
-        return (int)$matches[0] ?? 0;
+        if (!empty($url)) {
+            $pattern = "/\d+/";
+            preg_match($pattern, $url, $matches);
+            return (int)$matches[0];
+        }
+        return null;
     }
 
     private function mapAssocArrayToLocation(array $assocArray, Location $location): Location

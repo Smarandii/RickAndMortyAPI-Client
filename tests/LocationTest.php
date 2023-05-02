@@ -4,7 +4,6 @@ namespace Tests;
 
 use RickAndMortyAPI\Api;
 use RickAndMortyAPI\Dto\Location;
-use Symfony\Component\HttpClient\HttpClient;
 use PHPUnit\Framework\TestCase;
 use RickAndMortyAPI\Dto\LocationFilter;
 

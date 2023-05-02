@@ -25,7 +25,7 @@ class CharacterTest extends TestCase {
         $client = $this->getHttpClient();
         $api_client = new Api($client);
         $this->expectException(ClientException::class);
-        json_encode($api_client->getCharacter(1000), JSON_UNESCAPED_SLASHES);
+        json_encode($api_client->getCharacter(124312312), JSON_UNESCAPED_SLASHES);
     }
 
     public function testGetCharacterWithWrongClient() {

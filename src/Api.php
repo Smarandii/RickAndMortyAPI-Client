@@ -2,7 +2,6 @@
 declare(strict_types=1);
 namespace RickAndMortyAPI;
 
-use http\Exception\RuntimeException;
 use RickAndMortyAPI\Dto\Character;
 use RickAndMortyAPI\Dto\Episode;
 use RickAndMortyAPI\Dto\EpisodeFilter;
@@ -54,7 +53,7 @@ class Api
 
     private function mapAssocArrayToCharacter(array $assocArray, Character $character): Character
     {
-        $character->setId($assocArray['id'] ?? null);
+        $character->setId($assocArray['id'] ?? $this->getIdFromUrl($assocArray['url']));
         $character->setName($assocArray['name'] ?? null);
         $character->setStatus($assocArray['status'] ?? null);
         $character->setSpecies($assocArray['species'] ?? null);
@@ -81,9 +80,9 @@ class Api
         $response = $this->client->request(Api::GET_METHOD, Api::LOCATION_HANDLE . $id);
         $content = $response->getContent();
         $object = $this->getAssocArrayFromJson($content);
-        $character = new Location();
+        $location = new Location();
 
-        return $this->mapAssocArrayToLocation($object, $character);
+        return $this->mapAssocArrayToLocation($object, $location);
     }
 
     public function getLocations(LocationFilter $filter = null): ?array {
@@ -100,9 +99,16 @@ class Api
         return $locations;
     }
 
+    private function getIdFromUrl($url): int
+    {
+        $pattern = "/\d+/";
+        preg_match($pattern, $url, $matches);
+        return (int)$matches[0];
+    }
+
     private function mapAssocArrayToLocation(array $assocArray, Location $location): Location
     {
-        $location->setId($assocArray['id'] ?? null);
+        $location->setId($assocArray['id'] ?? $this->getIdFromUrl($assocArray['url']));
         $location->setName($assocArray['name'] ?? null);
         $location->setType($assocArray['type'] ?? null);
         $location->setDimension($assocArray['dimension'] ?? null);
@@ -138,7 +144,7 @@ class Api
 
     private function mapAssocArrayToEpisode(array $assocArray, Episode $episode): Episode
     {
-        $episode->setId($assocArray['id'] ?? null);
+        $episode->setId($assocArray['id'] ?? $this->getIdFromUrl($assocArray['url']));
         $episode->setName($assocArray['name'] ?? null);
         $episode->setAirDate($assocArray['air_date'] ?? null);
         $episode->setEpisode($assocArray['episode'] ?? null);

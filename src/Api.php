@@ -103,7 +103,7 @@ class Api
     {
         $pattern = "/\d+/";
         preg_match($pattern, $url, $matches);
-        return (int)$matches[0];
+        return (int)$matches[0] ?? 0;
     }
 
     private function mapAssocArrayToLocation(array $assocArray, Location $location): Location

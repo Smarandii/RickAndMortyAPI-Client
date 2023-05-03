@@ -1,3 +1,4 @@
+# This repo is for synchornizing with pagckagist
 # Library for RickAndMortyAPI
 
 [API documentation](https://rickandmortyapi.com/documentation/)
